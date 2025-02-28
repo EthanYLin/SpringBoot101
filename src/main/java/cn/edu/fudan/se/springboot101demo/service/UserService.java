@@ -56,4 +56,19 @@ public class UserService {
         user = userRepository.save(user);
         return new UserResponse(user);
     }
+
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                             .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    public void deductBalance(User user, Integer amount) {
+        if (user.getBalance() < amount) {
+            throw new RuntimeException("Insufficient balance");
+        } else if (amount < 0) {
+            throw new RuntimeException("Amount must be positive");
+        }
+        user.setBalance(user.getBalance() - amount);
+        userRepository.save(user);
+    }
 }
