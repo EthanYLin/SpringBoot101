@@ -28,4 +28,32 @@ public class UserService {
         user = userRepository.save(user);
         return new UserResponse(user);
     }
+
+    public UserResponse getUserResponseById(Long userId) {
+        return userRepository.findById(userId)
+                .map(UserResponse::new)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
+
+    public UserResponse changeUsername(Long userId, String newName) {
+        var user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        if (userRepository.existsByName(newName)) {
+            throw new RuntimeException("Username already exists");
+        }
+        user.setName(newName);
+        user = userRepository.save(user);
+        return new UserResponse(user);
+    }
+
+    public UserResponse addBalance(Long userId, Integer amount) {
+        var user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        if (amount < 0) {
+            throw new RuntimeException("Amount must be positive");
+        }
+        user.setBalance(user.getBalance() + amount);
+        user = userRepository.save(user);
+        return new UserResponse(user);
+    }
 }
