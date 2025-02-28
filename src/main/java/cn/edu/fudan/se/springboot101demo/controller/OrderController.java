@@ -3,6 +3,7 @@ package cn.edu.fudan.se.springboot101demo.controller;
 import cn.edu.fudan.se.springboot101demo.DTO.NewOrderRequest;
 import cn.edu.fudan.se.springboot101demo.DTO.OrderResponse;
 import cn.edu.fudan.se.springboot101demo.service.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderResponse createOrder(@RequestBody NewOrderRequest orderRequest) {
+    public OrderResponse createOrder(@RequestBody @Valid NewOrderRequest orderRequest) {
         return orderService.createOrder(orderRequest);
     }
 

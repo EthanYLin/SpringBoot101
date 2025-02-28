@@ -5,6 +5,7 @@ import cn.edu.fudan.se.springboot101demo.DTO.ChangeUsernameRequest;
 import cn.edu.fudan.se.springboot101demo.DTO.NewUserRequest;
 import cn.edu.fudan.se.springboot101demo.DTO.UserResponse;
 import cn.edu.fudan.se.springboot101demo.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,7 +18,7 @@ public class UserController {
     }
 
     @PostMapping
-    public UserResponse registerUser(@RequestBody NewUserRequest request) {
+    public UserResponse registerUser(@RequestBody @Valid NewUserRequest request) {
         return userService.registerUser(request);
     }
 
@@ -27,12 +28,12 @@ public class UserController {
     }
 
     @PutMapping("/{userId}/username")
-    public UserResponse changeUsername(@PathVariable Long userId, @RequestBody ChangeUsernameRequest request) {
+    public UserResponse changeUsername(@PathVariable Long userId, @RequestBody @Valid ChangeUsernameRequest request) {
         return userService.changeUsername(userId, request.name());
     }
 
     @PostMapping("/{userId}/balance")
-    public UserResponse addBalance(@PathVariable Long userId, @RequestBody AddBalanceRequest request) {
+    public UserResponse addBalance(@PathVariable Long userId, @RequestBody @Valid AddBalanceRequest request) {
         return userService.addBalance(userId, request.amount());
     }
 
