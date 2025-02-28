@@ -3,6 +3,7 @@ package cn.edu.fudan.se.springboot101demo.service;
 import cn.edu.fudan.se.springboot101demo.DTO.NewOrderRequest;
 import cn.edu.fudan.se.springboot101demo.DTO.OrderResponse;
 import cn.edu.fudan.se.springboot101demo.entity.Order;
+import cn.edu.fudan.se.springboot101demo.exception.NotFoundException;
 import cn.edu.fudan.se.springboot101demo.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +20,12 @@ public class OrderService {
     public OrderResponse getOrderResponseById(Long orderId) {
         return orderRepository.findById(orderId)
                 .map(OrderResponse::new)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new NotFoundException("Order not found"));
     }
 
     public void deleteOrderById(Long orderId) {
         if (!orderRepository.existsById(orderId)) {
-            throw new RuntimeException("Order not found");
+            throw new NotFoundException("Order not found");
         }
         orderRepository.deleteById(orderId);
     }
