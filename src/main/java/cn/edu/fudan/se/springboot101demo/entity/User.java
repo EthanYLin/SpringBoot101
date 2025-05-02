@@ -3,6 +3,7 @@ package cn.edu.fudan.se.springboot101demo.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
